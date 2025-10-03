@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import Slider from '@react-native-community/slider';
 import { useAudioPlayer } from 'expo-audio';
-const audioSource = require("../assets/audio/bellsound.mp3");
+const audioSource = require("../../assets/audio/bellsound.mp3");
 
 const ReikiTimer = () => {
   const [intervalMinutes, setIntervalMinutes] = useState(1);
@@ -223,3 +223,5 @@ buttonText: {
 });
 
 export default ReikiTimer;
+
+

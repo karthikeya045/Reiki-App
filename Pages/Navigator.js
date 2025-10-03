@@ -9,7 +9,7 @@ import Home from './Home';
 import Explore from './Screens/Explore';
 import Meditation from './Screens/Meditation';
 import Profile from './Screens/Profile';
-import ReikiTimer from './ReikiTimer';
+import ReikiTimer from './Screens/ReikiTimer';
 import Settings from './Screens/Settings';
 import FirstLevel from './ReikiLevels/FirstLevel';
 import SecondLevel from './ReikiLevels/SecondLevel';
