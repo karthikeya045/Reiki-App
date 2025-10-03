@@ -5,35 +5,19 @@ const images = [
   require('../../assets/symbols/dai-ko-myo.jpg'),
 ];
 
-const symbolNames = ["dai-ko-myo"];
+const symbolNames = ["Dai Ko Myo (Master Symbol)"];
 
 const symbolDescriptions = [
-  "Halu symbol relates to strength and endurance.",
-  "Harth symbol represents unity and balance.",
-  "Zonar symbol signifies innovation and creativity.",
+  "Dai Ko Myo – The master symbol associated with spiritual enlightenment, deep healing, and empowering all other symbols. It’s used to heal at the soul level, align purpose, and strengthen attunements.",
 ];
 
 const symbolBulletPoints = [
   [
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
-    "Used in warrior ceremonies",
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
-  ],
-  [
-    "Symbolizes harmony",
-    "Represents community unity",
-    "Used in peace rituals",
-    "Balances energies",
-  ],
-  [
-    "Represents creative force",
-    "Symbol for innovation",
-    "Used by artists and thinkers",
-    "Encourages new ideas",
+    "Amplifies and refines all Reiki energy and symbols",
+    "Supports soul-level and lineage healing",
+    "Promotes spiritual growth and purpose alignment",
+    "Used in attunements to empower the channel",
+    "Excellent for chronic, deep-rooted patterns",
   ],
 ];
 
