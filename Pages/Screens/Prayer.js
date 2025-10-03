@@ -1,48 +1,36 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Prayer = () => {
   const [fontSize, setFontSize] = useState(15);
   const increaseFont = () => setFontSize(size => Math.min(size + 2, 30));
   const decreaseFont = () => setFontSize(size => Math.max(size - 2, 10));
 
+  const { t } = useTranslation();
   return (
     <View style={styles.wrapper}>
       <ScrollView style={styles.container}>
-        <Text style={[styles.mainHeading, { fontSize: fontSize + 5 }]}>రేకి మార్చడర్గత సూత్రాలు</Text>
+        <Text style={[styles.mainHeading, { fontSize: fontSize + 5 }]}>{t('prayer.title_te')}</Text>
 
         <View style={styles.section}>
-          <Text style={[styles.bullet, { fontSize }]}>1. ఈ ఒక్కరోజు నేను కృతజ్ఞతాభావంతో ఉంటాను.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>2. ఈ ఒక్కరోజు నేను గాలికి పడను.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>3. ఈ ఒక్కరోజు నేను సంతోషంగా ఉంటాను.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>4. ఈ ఒక్కరోజు నేను కష్టపడతాను, మంచిగా పని చేస్తాను.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>5. ఈ ఒక్కరోజు ప్రతి ప్రాణి జీవితాన్ని ప్రేమ, ఆదరతో చూడటానికి ప్రయత్నిస్తాను.</Text>
+          {t('prayer.principles_te', { returnObjects: true }).map((line, idx) => (
+            <Text key={idx} style={[styles.bullet, { fontSize }]}>{line}</Text>
+          ))}
         </View>
 
-        <Text style={[styles.sectionHeading, { fontSize: fontSize + 1 }]}>రేకి కృతజ్ఞతాభావము</Text>
+        <Text style={[styles.sectionHeading, { fontSize: fontSize + 1 }]}>{t('prayer.gratitude_te')}</Text>
         <View style={styles.section}>
-          <Text style={[styles.bullet, { fontSize }]}>1. రేకికి కృతజ్ఞత.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>2. డా|| మికాయో ఉసూయ్ గారికి కృతజ్ఞత.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>3. డా|| హయాషి & టకాటా గారికి కృతజ్ఞత.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>4. శ్రీ కృష్ణ భగవానుని కృతజ్ఞతలు.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>5. నా తల్లిదండ్రులకు మరియు నా కుటుంబ సభ్యులకు కృతజ్ఞతలు.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>6. ______________కు కృతజ్ఞతలు.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>6. నాకు కృతజ్ఞతలు.</Text>
-          <Text style={[styles.bullet, { fontSize }]}>7. రేకి కి కృతజ్ఞతలు.</Text>
+          {t('prayer.gratitude_list_te', { returnObjects: true }).map((line, idx) => (
+            <Text key={idx} style={[styles.bullet, { fontSize }]}>{line}</Text>
+          ))}
         </View>
 
-        <Text style={[styles.sectionHeading, { fontSize: fontSize + 1 }]}>REIKI'S ATTITUDE OF GRATITUDE</Text>
+        <Text style={[styles.sectionHeading, { fontSize: fontSize + 1 }]}>{t('prayer.gratitude_en')}</Text>
         <View style={styles.section}>
-          <Text style={[styles.bullet, { fontSize }]}>1. Thanks to Reiki</Text>
-          <Text style={[styles.bullet, { fontSize }]}>2. Thanks to Dr. Mikao Usui</Text>
-          <Text style={[styles.bullet, { fontSize }]}>3. Thanks to Dr. Hayashi & Takata</Text>
-          <Text style={[styles.bullet, { fontSize }]}>4. Thanks to My God Lord Sri Krishna Bhagavan</Text>
-          <Text style={[styles.bullet, { fontSize }]}>5. Thanks to My Parents & Family Members</Text>
-          <Text style={[styles.bullet, { fontSize }]}>6. Thanks to _____________</Text>
-          <Text style={[styles.bullet, { fontSize }]}>7. Thanks to Myself</Text>
-          <Text style={[styles.bullet, { fontSize }]}>8. Thanks to Reiki</Text>
-          <Text style={[styles.bullet, { fontSize }]}></Text>
-          <Text style={[styles.bullet, { fontSize }]}></Text>
+          {t('prayer.gratitude_list_en', { returnObjects: true }).map((line, idx) => (
+            <Text key={idx} style={[styles.bullet, { fontSize }]}>{line}</Text>
+          ))}
         </View>
       </ScrollView>
 

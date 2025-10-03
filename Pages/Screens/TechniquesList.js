@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, StatusBar } from 'react-native'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const techniques = [
   {
@@ -19,6 +20,7 @@ const techniques = [
 const TechniquesList = () => {
   const [search, setSearch] = useState('')
   const [fontSize, setFontSize] = useState(14)
+  const { t } = useTranslation();
 
   const filteredTechniques = techniques.filter(({ title, description }) => {
     const query = search.toLowerCase()
@@ -40,7 +42,7 @@ const TechniquesList = () => {
     <View style={styles.wrapper}>
       <TextInput
         style={styles.searchInput}
-        placeholder="Search techniques..."
+        placeholder={t('common.searchPlaceholder')}
         value={search}
         onChangeText={setSearch}
       />
@@ -52,7 +54,7 @@ const TechniquesList = () => {
           </View>
         ))}
         {filteredTechniques.length === 0 && (
-          <Text style={styles.noResults}>No results found</Text>
+          <Text style={styles.noResults}>{t('common.noResults')}</Text>
         )}
       </ScrollView>
       <View style={styles.zoomControls}>

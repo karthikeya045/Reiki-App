@@ -1,0 +1,62 @@
+{
+  "app": { "title": "Reiki" },
+  "common": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "searchPlaceholder": "Search techniques...",
+    "email": "Email",
+    "password": "Password",
+    "profile": "Profile",
+    "noResults": "No results found"
+  },
+  "login": { "welcome": "Welcome to Reiki", "invalid": "Invalid email or password", "forgot": "Forgot Password?" },
+  "home": {
+    "reiki1": "Reiki 1st Level",
+    "reiki2": "Reiki 2nd Level",
+    "karuna1": "Karuna 1",
+    "karuna2": "Karuna 2",
+    "healingPoints": "24 healing points",
+    "timer": "Reiki Timer",
+    "techniques": "Techniques",
+    "treatments": "Treatments",
+    "prayer": "Prayer",
+    "chakra": "Chakra Healing",
+    "tokens": "Tokens"
+  },
+  "settings": { "title": "Settings", "language": "Language", "english": "English", "telugu": "Telugu" },
+  "prayer": {
+    "title_te": "రేకి మార్చడర్గత సూత్రాలు",
+    "principles_te": [
+      "1. ఈ ఒక్కరోజు నేను కృతజ్ఞతాభావంతో ఉంటాను.",
+      "2. ఈ ఒక్కరోజు నేను గాలికి పడను.",
+      "3. ఈ ఒక్కరోజు నేను సంతోషంగా ఉంటాను.",
+      "4. ఈ ఒక్కరోజు నేను కష్టపడతాను, మంచిగా పని చేస్తాను.",
+      "5. ఈ ఒక్కరోజు ప్రతి ప్రాణి జీవితాన్ని ప్రేమ, ఆదరతో చూడటానికి ప్రయత్నిస్తాను."
+    ],
+    "gratitude_te": "రేకి కృతజ్ఞతాభావము",
+    "gratitude_list_te": [
+      "1. రేకికి కృతజ్ఞత.",
+      "2. డా|| మికాయో ఉసూయ్ గారికి కృతజ్ఞత.",
+      "3. డా|| హయాషి & టకాటా గారికి కృతజ్ఞత.",
+      "4. శ్రీ కృష్ణ భగవానుని కృతజ్ఞతలు.",
+      "5. నా తల్లిదండ్రులకు మరియు నా కుటుంబ సభ్యులకు కృతజ్ఞతలు.",
+      "6. ______________కు కృతజ్ఞతలు.",
+      "6. నాకు కృతజ్ఞతలు.",
+      "7. రేకి కి కృతజ్ఞతలు."
+    ],
+    "gratitude_en": "REIKI'S ATTITUDE OF GRATITUDE",
+    "gratitude_list_en": [
+      "1. Thanks to Reiki",
+      "2. Thanks to Dr. Mikao Usui",
+      "3. Thanks to Dr. Hayashi & Takata",
+      "4. Thanks to My God Lord Sri Krishna Bhagavan",
+      "5. Thanks to My Parents & Family Members",
+      "6. Thanks to _____________",
+      "7. Thanks to Myself",
+      "8. Thanks to Reiki"
+    ]
+  }
+}
+
+

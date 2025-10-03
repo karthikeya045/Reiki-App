@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
@@ -22,6 +22,8 @@ import ChakraHealing from './Screens/ChakraHealing';
 import Tokens from './Screens/Tokens';
 import TechniquesList from './Screens/TechniquesList';
 import LoginPage from './Screens/LoginPage';
+import { useSelector } from 'react-redux';
+import { useThemeTokens, useThemeMode } from './theme';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -140,16 +142,24 @@ const TabNavigator = () => (
   </Tab.Navigator>
 );
 
+const Splash = () => null;
+
 const Navigator = () => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const { isLoading, isSignedIn } = useSelector(state => state.auth);
+  const tokens = useThemeTokens();
+  const mode = useThemeMode();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={
+      mode === 'dark'
+        ? { ...DarkTheme, colors: { ...DarkTheme.colors, background: tokens.background, card: tokens.surface, text: tokens.text, border: tokens.border, primary: tokens.primary } }
+        : { ...DefaultTheme, colors: { ...DefaultTheme.colors, background: tokens.background, card: tokens.surface, text: tokens.text, border: tokens.border, primary: tokens.primary } }
+    }>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!isSignedIn ? (
-          <Stack.Screen name="Login">
-            {props => <LoginPage {...props} onLogin={() => setIsSignedIn(true)} />}
-          </Stack.Screen>
+        {isLoading ? (
+          <Stack.Screen name="Splash" component={Splash} />
+        ) : !isSignedIn ? (
+          <Stack.Screen name="Login" component={LoginPage} />
         ) : (
           <Stack.Screen name="Main" component={TabNavigator} />
         )}

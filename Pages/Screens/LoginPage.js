@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useThemeTokens } from '../theme'
 import { AntDesign } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInThunk } from '../../Pages/store/slices/authSlice';
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = () => {
+  const dispatch = useDispatch();
+  const isSubmitting = useSelector(state => state.auth.isLoading);
   const [email, setEmail] = useState('test@example.com');
   const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    if (email === 'test@example.com' && password === 'password') {
-      setError('');
-      onLogin(); // Call parent callback on success
-    } else {
-      setError('Invalid email or password');
+  const handleLogin = async () => {
+    setError('');
+    try {
+      await dispatch(signInThunk({ email, password })).unwrap();
+    } catch (err) {
+      setError(err?.message || 'Failed to sign in');
     }
   };
 
+  const { t } = useTranslation();
+  const tokens = useThemeTokens();
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Reiki</Text>
+    <View style={[styles.container, { backgroundColor: tokens.background }]}>
+      <Text style={styles.title}>{t('login.welcome')}</Text>
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Email"
+          placeholder={t('common.email')}
           autoCapitalize="none"
           keyboardType="email-address"
           value={email}
@@ -30,7 +38,7 @@ const LoginPage = ({ onLogin }) => {
           placeholderTextColor="#555"
         />
         <TextInput
-          placeholder="Password"
+          placeholder={t('common.password')}
           secureTextEntry
           value={password}
           onChangeText={setPassword}
@@ -39,14 +47,13 @@ const LoginPage = ({ onLogin }) => {
         />
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
-      <Text style={styles.forgotText}>Forgot Password?</Text>
+      <Text style={styles.forgotText}>{t('login.forgot')}</Text>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-          {/* <AntDesign name="google" size={24} color="white" style={{ marginRight: 8 }} /> */}
-            <Text style={styles.loginButtonText}>Login</Text>
+        <TouchableOpacity onPress={handleLogin} style={[styles.loginButton, isSubmitting && { opacity: 0.7 }]} disabled={isSubmitting}>
+            {isSubmitting ? <ActivityIndicator color="#fff" /> : <Text style={styles.loginButtonText}>{t('common.login')}</Text>}
         </TouchableOpacity>
         <TouchableOpacity style={styles.registerButton}>
-            <Text style={styles.registerButtonText}>Register</Text>
+            <Text style={styles.registerButtonText}>{t('common.register')}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.googleLoginButton}>
             <AntDesign name="google" size={24} color="white" style={{ marginRight: 8 }} /> 
