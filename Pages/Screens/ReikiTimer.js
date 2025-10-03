@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import Slider from '@react-native-community/slider';
 import { useAudioPlayer } from 'expo-audio';
+import { useThemeTokens } from '../theme'
 const audioSource = require("../../assets/audio/bellsound.mp3");
 
 const ReikiTimer = () => {
@@ -12,6 +13,7 @@ const ReikiTimer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [slide, setSlide] = useState(0);
   const [duration, setDuration] = useState(0);
+  const tokens = useThemeTokens();
 
   const formatTime = (secs) => {
     const hours = Math.floor(secs / 3600);
@@ -31,9 +33,9 @@ const ReikiTimer = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
-        <StatusBar barStyle="dark-content" backgroundColor="#f5f5f5" />   
-        <View style={styles.container}>
+    <ScrollView style={{ flex: 1, backgroundColor: tokens.background }}>
+        <StatusBar barStyle="dark-content" backgroundColor={tokens.background} />   
+        <View style={[styles.container, { backgroundColor: tokens.surface }]}>
             <CountdownCircleTimer
                 isPlaying={isPlaying}
                 key={remainingIterations}
@@ -54,7 +56,7 @@ const ReikiTimer = () => {
                   }, 5000); // Play again after 5 seconds
                   return false;
                 }}
-                colors={['#a0d9ef', '#62c1e5', '#20a7db', '#1c96c5', 'red']}
+                colors={[tokens.primary, tokens.primaryStrong, '#20a7db', '#1c96c5', 'red']}
                 colorsTime={[15, 10, 7, 5, 0]}
                 size={280}
                 strokeWidth={12}
@@ -65,7 +67,7 @@ const ReikiTimer = () => {
             </CountdownCircleTimer>
 
             <View style={styles.sliderSection}>
-                <Text style={styles.label}>Time Interval</Text>
+                <Text style={[styles.label, { color: tokens.text }]}>Time Interval</Text>
                 <View style={styles.sliderRow}>
                     <Slider
                     onValueChange={(value) => setIntervalMinutes(Math.round(value))}
@@ -73,9 +75,9 @@ const ReikiTimer = () => {
                     minimumValue={1}
                     maximumValue={30}
                     value={intervalMinutes}
-                    minimumTrackTintColor="#1c96c5"
+                    minimumTrackTintColor={tokens.primary}
                     maximumTrackTintColor="#ddd"
-                    thumbTintColor="#20a7db"
+                    thumbTintColor={tokens.primaryStrong}
                     disabled={isPlaying}
                     />
                     <Text style={styles.valueText}>{intervalMinutes}</Text>
@@ -83,7 +85,7 @@ const ReikiTimer = () => {
             </View>
 
             <View style={styles.sliderSection}>
-                <Text style={styles.label}>Duration (minutes)</Text>
+                <Text style={[styles.label, { color: tokens.text }]}>Duration (minutes)</Text>
                 <View style={styles.sliderRow}>
                     <Slider
                     value={durationMinutes}
@@ -91,9 +93,9 @@ const ReikiTimer = () => {
                     style={styles.slider}
                     minimumValue={1}
                     maximumValue={30}
-                    minimumTrackTintColor="#1c96c5"
+                    minimumTrackTintColor={tokens.primary}
                     maximumTrackTintColor="#ddd"
-                    thumbTintColor="#20a7db"
+                    thumbTintColor={tokens.primaryStrong}
                     disabled={isPlaying} 
                     />
                     <Text style={styles.valueText}>{durationMinutes}</Text>
@@ -109,14 +111,14 @@ const ReikiTimer = () => {
                     setDuration(durationMinutes * 60);
                     setIsPlaying(true); // start running
                 }}
-                style={styles.button}
+                style={[styles.button, { backgroundColor: tokens.primaryStrong }]}
                 >
                 <Text style={styles.buttonText}>Start</Text>
                 </TouchableOpacity>
             ) : (
                 <TouchableOpacity
                 onPress={() => setIsPlaying(false)}  // stop timer
-                style={[styles.button, { backgroundColor: 'red' }]}
+                style={[styles.button, { backgroundColor: '#ef4444' }]}
                 >
                 <Text style={styles.buttonText}>Stop</Text>
                 </TouchableOpacity>
@@ -132,7 +134,7 @@ const ReikiTimer = () => {
                 setDurationMinutes(1);
                 }}
                 disabled={isPlaying}
-                style={[styles.button, { backgroundColor: isPlaying ? '#666' : '#20a7db' }]}
+                style={[styles.button, { backgroundColor: isPlaying ? '#666' : tokens.primary }]}
             >
                 <Text style={styles.buttonText}>Reset</Text>
             </TouchableOpacity>
@@ -151,7 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingVertical: 15,
     paddingTop: StatusBar.currentHeight + 20
