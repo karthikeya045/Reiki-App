@@ -2,7 +2,7 @@ import { View, Text, StatusBar, StyleSheet, Pressable, ScrollView } from 'react-
 import { useTranslation } from 'react-i18next';
 import { useThemeTokens } from './theme';
 import React from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const tileColors = [
   '#6c5ce7', '#0984e3', '#00b894', '#e17055', '#fd79a8',
@@ -20,8 +20,8 @@ const tileRoutes = [
   'TechniquesList', 'Treatments', 'Prayer', 'ChakraHealing', 'Tokens'
 ];
 const tileIcons = [
-  'star', 'staro', 'hearto', 'heart', 'pluscircleo', 'clockcircleo',
-  'profile', 'medicineboxo', 'smileo', 'API', 'tagso'
+  'star', 'award', 'heart', 'layers', 'plus-circle', 'clock',
+  'list', 'activity', 'book', 'aperture', 'tag'
 ];
 
 const Home = ({ navigation }) => {
@@ -38,12 +38,6 @@ const Home = ({ navigation }) => {
     <>
       <StatusBar barStyle="dark-content" />
       <ScrollView contentContainerStyle={[styles.container, { backgroundColor: tokens.background }]}>
-        <View style={[styles.header, { backgroundColor: tokens.surface }]}> 
-          <Text style={[styles.headerTitle, { color: tokens.text }]}>{t('app.title')}</Text>
-          <Text style={[styles.headerSubtitle, { color: tokens.textMuted }]}>
-            {t('home.techniques')} · {t('home.treatments')} · {t('home.prayer')}
-          </Text>
-        </View>
         {rows.map((row, rowIndex) => (
           <View style={styles.row} key={rowIndex}>
             {row.map((color, colIndex) => {
@@ -66,7 +60,7 @@ const Home = ({ navigation }) => {
                   <View style={styles.badge} />
                   <View style={styles.tileInner}>
                     <View style={styles.iconCircle}>
-                      <AntDesign name={tileIcons[tileIndex]} size={18} color="#ffffff" />
+                      <Feather name={tileIcons[tileIndex]} size={18} color="#ffffff" />
                     </View>
                     <View style={styles.labelPill}>
                       <Text numberOfLines={2} style={styles.tileText}>{tileName}</Text>
@@ -88,27 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#f7f9fc',
     paddingTop: StatusBar.currentHeight + 8,
-  },
-  header: {
-    marginBottom: 10,
-    paddingVertical: 16,
-    paddingHorizontal: 14,
-    borderRadius: 14,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    letterSpacing: 0.3,
-  },
-  headerSubtitle: {
-    marginTop: 4,
-    fontSize: 13,
-    fontWeight: '500',
   },
   row: {
     flexDirection: 'row',
@@ -164,7 +137,7 @@ const styles = StyleSheet.create({
   },
   tileText: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 12,
     color: 'white',
     fontWeight: '700',
     textAlignVertical: 'center',
