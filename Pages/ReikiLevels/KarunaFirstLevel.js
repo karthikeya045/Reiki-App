@@ -57,7 +57,7 @@ const KarunaFirstLevel = () => {
       />
 
       {/* Scrollable description area */}
-      <ScrollView style={styles.descriptionScroll}>
+      <ScrollView style={styles.descriptionScroll} showsVerticalScrollIndicator={true}>
         <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
         <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
 

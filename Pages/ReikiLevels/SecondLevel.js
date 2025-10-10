@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 
 const images = [
@@ -8,7 +8,7 @@ const images = [
 const symbolNames = ["Dai Ko Myo (Master Symbol)"];
 
 const symbolDescriptions = [
-  "Dai Ko Myo – The master symbol associated with spiritual enlightenment, deep healing, and empowering all other symbols. It’s used to heal at the soul level, align purpose, and strengthen attunements.",
+  "The master symbol associated with spiritual enlightenment, deep healing, and empowering all other symbols. It’s used to heal at the soul level, align purpose, and strengthen attunements.",
 ];
 
 const symbolBulletPoints = [
@@ -36,7 +36,7 @@ const SecondLevel = () => {
       />
 
       {/* Scrollable description area */}
-      <ScrollView style={styles.descriptionScroll}>
+      <ScrollView style={styles.descriptionScroll} showsVerticalScrollIndicator={true}>
         <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
         <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
 
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: '#f0f4f8',
+    paddingTop: StatusBar.currentHeight + 10
   },
   title: {
     fontSize: 24,
@@ -107,8 +108,12 @@ const styles = StyleSheet.create({
   },
   descriptionScroll: {
     marginHorizontal: 16,
-    maxHeight: 225, // max height for description scroll area
+    maxHeight: 305, // max height for description scroll area
     marginBottom: 20,
+    borderColor: 'lightgray',
+    borderWidth: 0.3,
+    borderRadius: 12,
+    padding: 12,
   },
   symbolName: {
     fontSize: 20,
