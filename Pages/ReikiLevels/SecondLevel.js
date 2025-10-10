@@ -1,39 +1,23 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
 import React, { useState } from 'react';
 
 const images = [
   require('../../assets/symbols/dai-ko-myo.jpg'),
 ];
 
-const symbolNames = ["dai-ko-myo"];
+const symbolNames = ["Dai Ko Myo (Master Symbol)"];
 
 const symbolDescriptions = [
-  "Halu symbol relates to strength and endurance.",
-  "Harth symbol represents unity and balance.",
-  "Zonar symbol signifies innovation and creativity.",
+  "The master symbol associated with spiritual enlightenment, deep healing, and empowering all other symbols. It’s used to heal at the soul level, align purpose, and strengthen attunements.",
 ];
 
 const symbolBulletPoints = [
   [
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
-    "Used in warrior ceremonies",
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
-  ],
-  [
-    "Symbolizes harmony",
-    "Represents community unity",
-    "Used in peace rituals",
-    "Balances energies",
-  ],
-  [
-    "Represents creative force",
-    "Symbol for innovation",
-    "Used by artists and thinkers",
-    "Encourages new ideas",
+    "Amplifies and refines all Reiki energy and symbols",
+    "Supports soul-level and lineage healing",
+    "Promotes spiritual growth and purpose alignment",
+    "Used in attunements to empower the channel",
+    "Excellent for chronic, deep-rooted patterns",
   ],
 ];
 
@@ -103,6 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
     backgroundColor: '#f0f4f8',
+    paddingTop: StatusBar.currentHeight + 10
   },
   title: {
     fontSize: 24,
@@ -123,8 +108,12 @@ const styles = StyleSheet.create({
   },
   descriptionScroll: {
     marginHorizontal: 16,
-    maxHeight: 225, // max height for description scroll area
+    maxHeight: 305, // max height for description scroll area
     marginBottom: 20,
+    borderColor: 'lightgray',
+    borderWidth: 0.3,
+    borderRadius: 12,
+    padding: 12,
   },
   symbolName: {
     fontSize: 20,

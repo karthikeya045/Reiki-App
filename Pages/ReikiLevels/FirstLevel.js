@@ -10,32 +10,33 @@ const images = [
 const symbolNames = ["cho-ku-rei", "sei-he-ki", "hon-sha-ze-sho-nen"];
 
 const symbolDescriptions = [
-  "Halu symbol relates to strength and endurance.",
-  "Harth symbol represents unity and balance.",
-  "Zonar symbol signifies innovation and creativity.",
+  "Cho Ku Rei (Power Symbol) – Amplifies energy, clears spaces, protects, and accelerates healing. Often drawn at the start and end to enhance the flow.",
+  "Sei He Ki (Harmony Symbol) – Balances mind and emotions, supports mental clarity, releases negative patterns, and aids emotional healing.",
+  "Hon Sha Ze Sho Nen (Distance Symbol) – Connects beyond time and space for distant healing, inner-child work, and transforming past patterns.",
 ];
 
 const symbolBulletPoints = [
   [
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
-    "Used in warrior ceremonies",
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
+    "Boosts the intensity of Reiki flow",
+    "Cleanses and charges rooms, food, water, crystals",
+    "Creates energetic protection/shielding",
+    "Seals treatments at the end",
+    "Draw over pain areas to reduce discomfort",
+    "Use at the start to ‘switch on’ power",
   ],
   [
-    "Symbolizes harmony",
-    "Represents community unity",
-    "Used in peace rituals",
-    "Balances energies",
+    "Balances left–right brain and emotions",
+    "Supports release of stress, anxiety, and habits",
+    "Helpful for sleep and mental clarity",
+    "Can be placed over solar plexus/heart for calm",
+    "Pairs well after Cho Ku Rei to harmonize",
   ],
   [
-    "Represents creative force",
-    "Symbol for innovation",
-    "Used by artists and thinkers",
-    "Encourages new ideas",
+    "Enables distant and across-time healing",
+    "Send Reiki to future events and past memories",
+    "Useful for relationship and inner-child work",
+    "Connects to clients not physically present",
+    "Combine with Cho Ku Rei to amplify at a distance",
   ],
 ];
 

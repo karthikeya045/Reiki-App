@@ -11,39 +11,36 @@ const images = [
 const symbolNames = ["Zonar", "Halu", "Harth", "Rama"];
 
 const symbolDescriptions = [
-  "Zonar symbol signifies innovation and creativity.",
-  "Halu symbol relates to strength and endurance.",
-  "Harth symbol represents unity and balance.",
-  "Rama symbol represents unity and balance.",
+  "Zonar – Heals at the cellular and karmic level; useful for early-life and deep-seated patterns; gently unwinds stuck energies.",
+  "Halu – An intensified Zonar; excellent for dissolving illusions, psychic protection, trauma release, and clearing attachments.",
+  "Harth – Heart opening and compassion; supports emotional healing, relationships, forgiveness, and self-love.",
+  "Rama – Grounding, manifestation, and balancing masculine–feminine; supports boundaries, decisiveness, and stability.",
 ];
 
 const symbolBulletPoints = [
   [
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
-    "Used in warrior ceremonies",
-    "Represents physical strength",
-    "Associated with resilience",
-    "Symbolizes endurance",
+    "Karmic and cellular-level healing",
+    "Helpful for chronic, repeating patterns",
+    "Soothes inner-child and early-life wounds",
+    "Combine with Harth for gentle emotional release",
   ],
   [
-    "Symbolizes harmony",
-    "Represents community unity",
-    "Used in peace rituals",
-    "Balances energies",
+    "Strong psychic protection and clearing",
+    "Cuts through fears, illusions, and attachments",
+    "Great before sleep and after dense interactions",
+    "Amplifies Zonar for deeper extraction",
   ],
   [
-    "Represents creative force",
-    "Symbol for innovation",
-    "Used by artists and thinkers",
-    "Encourages new ideas",
+    "Opens heart center and nurtures compassion",
+    "Supports forgiveness and relationship harmony",
+    "Relieves grief, loneliness, and resentment",
+    "Place over heart/thymus for emotional balance",
   ],
   [
-    "Represents creative force",
-    "Symbol for innovation",
-    "Used by artists and thinkers",
-    "Encourages new ideas",
+    "Grounds and stabilizes energy",
+    "Enhances manifestation and confident action",
+    "Balances masculine–feminine polarity",
+    "Use at base feet/hips to anchor after sessions",
   ],
 ];
 
