@@ -10,7 +10,7 @@ const LoginPage = ({ onLogin }) => {
   const handleLogin = () => {
     if (email === 'test@example.com' && password === 'password') {
       setError('');
-      onLogin(); // Call parent callback on success
+      onLogin(email); // Pass email to parent callback on success
     } else {
       setError('Invalid email or password');
     }

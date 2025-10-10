@@ -9,7 +9,7 @@ import Home from './Home';
 import Explore from './Screens/Explore';
 import Meditation from './Screens/Meditation';
 import Profile from './Screens/Profile';
-import ReikiTimer from './ReikiTimer';
+import ReikiTimer from './Screens/ReikiTimer';
 import Settings from './Screens/Settings';
 import FirstLevel from './ReikiLevels/FirstLevel';
 import SecondLevel from './ReikiLevels/SecondLevel';
@@ -91,7 +91,7 @@ const HomeStack = () => (
   </Stack.Navigator>
 );
 
-const TabNavigator = () => (
+const TabNavigator = ({ userEmail, onLogout }) => (
   <Tab.Navigator
     initialRouteName="HomeTab"
     screenOptions={{
@@ -130,7 +130,8 @@ const TabNavigator = () => (
     /> */}
     <Tab.Screen
       name="Profile"
-      component={Profile}
+      // Use a render callback so we can inject props
+      children={(props) => <Profile {...props} userEmail={userEmail} onLogout={onLogout} />}
       options={{
         tabBarIcon: ({ color, size }) => (
           <AntDesign name="user" size={size} color={color} />
@@ -142,16 +143,29 @@ const TabNavigator = () => (
 
 const Navigator = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+
+  const handleLogin = (email) => {
+    setUserEmail(email || '');
+    setIsSignedIn(true);
+  };
+
+  const handleLogout = () => {
+    setUserEmail('');
+    setIsSignedIn(false);
+  };
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isSignedIn ? (
           <Stack.Screen name="Login">
-            {props => <LoginPage {...props} onLogin={() => setIsSignedIn(true)} />}
+            {props => <LoginPage {...props} onLogin={(email) => handleLogin(email)} />}
           </Stack.Screen>
         ) : (
-          <Stack.Screen name="Main" component={TabNavigator} />
+          <Stack.Screen name="Main">
+            {props => <TabNavigator {...props} userEmail={userEmail} onLogout={handleLogout} />}
+          </Stack.Screen>
         )}
       </Stack.Navigator>
     </NavigationContainer>
