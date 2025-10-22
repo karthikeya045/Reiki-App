@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,10 +16,22 @@ const menuItems = [
 const Profile = ({ onLogout }) => {
   const navigation = useNavigation();
 
+  const [languageDropdownVisible, setLanguageDropdownVisible] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('English'); // default language
+
   const handleLogout = () => {
     if (typeof onLogout === 'function') onLogout();
     else navigation.replace('Login');
-  }
+  };
+
+  const toggleLanguageDropdown = () => {
+    setLanguageDropdownVisible(!languageDropdownVisible);
+  };
+
+  const handleLanguageSelect = (lang) => {
+    setSelectedLanguage(lang);
+    setLanguageDropdownVisible(false);
+  };
 
   return (
     <View style={styles.outerContainer}>
@@ -31,7 +43,7 @@ const Profile = ({ onLogout }) => {
       >
         <View style={styles.header}>
           <View style={styles.avatarCircle}>
-            {/* <Icon name="account" size={56} color="#ccc" /> */}
+            {/* Optionally add user avatar Icon here */}
           </View>
           <View style={styles.headerText}>
             <Text style={styles.profileName}>karthik</Text>
@@ -42,19 +54,60 @@ const Profile = ({ onLogout }) => {
         </View>
 
         <View style={styles.menuList}>
-          {menuItems.map((item, idx) => (
-            <TouchableOpacity key={idx} style={styles.menuItem}>
-              <Icon name={item.icon} size={26} color="#e1413a" />
-              <View style={styles.menuText}>
-                <Text style={styles.menuLabel}>{item.label}</Text>
-                {item.subtitle && (
-                  <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
-                )}
-              </View>
-              {item.badge && <View style={styles.badge} />}
-            </TouchableOpacity>
-          ))}
+          {menuItems.map((item, idx) => {
+            if (item.label === 'Language') {
+              return (
+                <View key={`language-${idx}`}>
+                  <TouchableOpacity style={styles.menuItem} onPress={toggleLanguageDropdown} key={`lang-touch-${idx}`}>
+                    <Icon name={item.icon} size={26} color="#e1413a" />
+                    <View style={styles.menuText}>
+                      <Text style={styles.menuLabel}>{item.label}</Text>
+                      <Text style={[styles.menuSubtitle, { color: '#222' }]}>{selectedLanguage}</Text>
+                    </View>
+                  </TouchableOpacity>
+
+                  {languageDropdownVisible && (
+                    <View style={styles.dropdownContainer} key={`lang-dropdown-${idx}`}>
+                      <TouchableOpacity
+                        style={styles.radioOption}
+                        onPress={() => handleLanguageSelect('Telugu')}
+                        key="radio-telugu"
+                      >
+                        <View style={styles.radioCircle}>
+                          {selectedLanguage === 'Telugu' && <View style={styles.selectedRb} />}
+                        </View>
+                        <Text style={styles.radioText}>Telugu</Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={styles.radioOption}
+                        onPress={() => handleLanguageSelect('English')}
+                        key="radio-english"
+                      >
+                        <View style={styles.radioCircle}>
+                          {selectedLanguage === 'English' && <View style={styles.selectedRb} />}
+                        </View>
+                        <Text style={styles.radioText}>English</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+              );
+            }
+
+            return (
+              <TouchableOpacity key={idx} style={styles.menuItem}>
+                <Icon name={item.icon} size={26} color="#e1413a" />
+                <View style={styles.menuText}>
+                  <Text style={styles.menuLabel}>{item.label}</Text>
+                  {item.subtitle && <Text style={styles.menuSubtitle}>{item.subtitle}</Text>}
+                </View>
+                {item.badge && <View style={styles.badge} />}
+              </TouchableOpacity>
+            );
+          })}
         </View>
+
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
@@ -128,5 +181,40 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#fff',
     fontWeight: '700'
-  }
+  },
+
+  dropdownContainer: {
+    backgroundColor: '#f9f9f9',
+    marginHorizontal: 32,
+    borderRadius: 12,
+    paddingVertical: 10,
+    elevation: 2,
+    marginTop: 6,
+  },
+  radioOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+  },
+  radioCircle: {
+    height: 18,
+    width: 18,
+    borderRadius: 9,
+    borderWidth: 2,
+    borderColor: '#e1413a',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selectedRb: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#e1413a',
+  },
+  radioText: {
+    marginLeft: 12,
+    fontSize: 15,
+    color: '#222',
+  },
 });
