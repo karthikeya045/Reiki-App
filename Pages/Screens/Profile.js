@@ -2,39 +2,36 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Switch
 import React, { useState, useContext, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { LanguageContext } from '../../services/LanguageContext';
 
 const menuItems = [
-  // { icon: 'city', label: 'City', subtitle: 'Select your city' },
-  { icon: 'bell', label: 'Notifications', badge: true },
   { icon: 'newspaper', label: 'Language' },
-  { icon: 'trophy', label: 'Theme' },
-  { icon: 'pencil', label: 'Privacy Policy' },
+  { icon: 'trophy', label: 'Dark Theme', subtitle: 'Enable dark interface' },
+  // { icon: 'pencil', label: 'Privacy Policy' },
   { icon: 'help-circle', label: 'About Us' },
   { icon: 'calendar-remove', label: 'Contact Us' },
 ];
 
-import { LanguageContext } from '../../services/LanguageContext';
-
 const Profile = ({ onLogout }) => {
   const navigation = useNavigation();
-
   const { language, setLanguage } = useContext(LanguageContext);
-  const [languageDropdownVisible, setLanguageDropdownVisible] = useState(false);
-  // local display value (English/Telugu)
-  const [selectedLanguage, setSelectedLanguage] = useState(language === 'te' ? 'Telugu' : 'English'); // default
 
-  // Theme toggle state
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  // keep local label in sync if language changes elsewhere
+  const [isTelugu, setIsTelugu] = useState(language === 'te');
   useEffect(() => {
-    setSelectedLanguage(language === 'te' ? 'Telugu' : 'English');
+    setIsTelugu(language === 'te');
   }, [language]);
 
-  // handle toggle of theme switch
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const toggleLanguageSwitch = () => {
+    const newValue = !isTelugu;
+    setIsTelugu(newValue);
+    const code = newValue ? 'te' : 'en';
+    if (typeof setLanguage === 'function') setLanguage(code);
+  };
+
   const toggleThemeSwitch = () => {
     setIsDarkTheme((prev) => !prev);
-    // optionally, add logic here to update theme globally (e.g., context or redux)
   };
 
   const handleLogout = () => {
@@ -42,114 +39,86 @@ const Profile = ({ onLogout }) => {
     else navigation.replace('Login');
   };
 
-  const toggleLanguageDropdown = () => {
-    setLanguageDropdownVisible(!languageDropdownVisible);
-  };
-
-  const handleLanguageSelect = (lang) => {
-    setSelectedLanguage(lang);
-    // persist as short code for consumers: Telugu -> 'te', English -> 'en'
-    const code = lang === 'Telugu' ? 'te' : 'en';
-    if (typeof setLanguage === 'function') setLanguage(code);
-    setLanguageDropdownVisible(false);
-  };
-
   return (
     <View style={styles.outerContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={true}
-      >
-        <View style={styles.header}>
-          <View style={styles.avatarCircle}>
-            {/* Optionally add user avatar Icon here */}
+      <View style={styles.flexContainer}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={true}
+        >
+          {/* Header */}
+          <View style={styles.header}>
+            <View style={styles.avatarCircle}></View>
+            <View style={styles.headerText}>
+              <Text style={styles.profileName}>karthik</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('EditProfileScreen')}>
+                <Text style={styles.editProfile}>Edit Profile</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.headerText}>
-            <Text style={styles.profileName}>karthik</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('EditProfileScreen')}>
-              <Text style={styles.editProfile}>Edit Profile</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        <View style={styles.menuList}>
-          {menuItems.map((item, idx) => {
-            if (item.label === 'Language') {
-              return (
-                <View key={`language-${idx}`}>
-                  <TouchableOpacity style={styles.menuItem} onPress={toggleLanguageDropdown} key={`lang-touch-${idx}`}>
+          {/* Menu Items */}
+          <View style={styles.menuList}>
+            {menuItems.map((item, idx) => {
+              if (item.label === 'Language') {
+                return (
+                  <View key={`language-switch-${idx}`} style={styles.menuItemCompact}>
                     <Icon name={item.icon} size={26} color="#e1413a" />
                     <View style={styles.menuText}>
                       <Text style={styles.menuLabel}>{item.label}</Text>
-                      <Text style={[styles.menuSubtitle, { color: '#222' }]}>{selectedLanguage}</Text>
+                      <Text style={styles.menuSubtitle}>{isTelugu ? 'Telugu' : 'English'}</Text>
                     </View>
-                  </TouchableOpacity>
+                    <Switch
+                      trackColor={{ false: '#767577', true: '#e1413a' }}
+                      thumbColor={isTelugu ? '#fff' : '#f4f3f4'}
+                      onValueChange={toggleLanguageSwitch}
+                      value={isTelugu}
+                    />
+                  </View>
+                );
+              }
 
-                  {languageDropdownVisible && (
-                    <View style={styles.dropdownContainer} key={`lang-dropdown-${idx}`}>
-                      <TouchableOpacity
-                        style={styles.radioOption}
-                        onPress={() => handleLanguageSelect('Telugu')}
-                        key="radio-telugu"
-                      >
-                        <View style={styles.radioCircle}>
-                          {selectedLanguage === 'Telugu' && <View style={styles.selectedRb} />}
-                        </View>
-                        <Text style={styles.radioText}>Telugu</Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity
-                        style={styles.radioOption}
-                        onPress={() => handleLanguageSelect('English')}
-                        key="radio-english"
-                      >
-                        <View style={styles.radioCircle}>
-                          {selectedLanguage === 'English' && <View style={styles.selectedRb} />}
-                        </View>
-                        <Text style={styles.radioText}>English</Text>
-                      </TouchableOpacity>
+              if (item.label === 'Dark Theme') {
+                return (
+                  <View key={`theme-${idx}`} style={styles.menuItemCompact}>
+                    <Icon name={item.icon} size={26} color="#e1413a" />
+                    <View style={styles.menuText}>
+                      <Text style={styles.menuLabel}>{item.label}</Text>
+                      <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
                     </View>
-                  )}
-                </View>
-              );
-            }
+                    <Switch
+                      trackColor={{ false: '#767577', true: '#e1413a' }}
+                      thumbColor={isDarkTheme ? '#fff' : '#f4f3f4'}
+                      onValueChange={toggleThemeSwitch}
+                      value={isDarkTheme}
+                    />
+                  </View>
+                );
+              }
 
-            if (item.label === 'Theme') {
               return (
-                <View key={`theme-${idx}`} style={styles.menuItem}>
+                <TouchableOpacity key={idx} style={styles.menuItem}>
                   <Icon name={item.icon} size={26} color="#e1413a" />
                   <View style={styles.menuText}>
                     <Text style={styles.menuLabel}>{item.label}</Text>
+                    {item.subtitle && <Text style={styles.menuSubtitle}>{item.subtitle}</Text>}
                   </View>
-                  <Switch
-                    trackColor={{ false: '#767577', true: '#e1413a' }}
-                    thumbColor={isDarkTheme ? '#fff' : '#f4f3f4'}
-                    onValueChange={toggleThemeSwitch}
-                    value={isDarkTheme}
-                  />
-                </View>
+                  {item.badge && <View style={styles.badge} />}
+                </TouchableOpacity>
               );
-            }
+            })}
+          </View>
+        </ScrollView>
 
-            return (
-              <TouchableOpacity key={idx} style={styles.menuItem}>
-                <Icon name={item.icon} size={26} color="#e1413a" />
-                <View style={styles.menuText}>
-                  <Text style={styles.menuLabel}>{item.label}</Text>
-                  {item.subtitle && <Text style={styles.menuSubtitle}>{item.subtitle}</Text>}
-                </View>
-                {item.badge && <View style={styles.badge} />}
-              </TouchableOpacity>
-            );
-          })}
+        {/* Logout Button fixed at bottom */}
+        <View style={styles.logoutButtonContainer}>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -160,6 +129,9 @@ const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  flexContainer: {
+    flex: 1,
   },
   container: {
     flex: 1,
@@ -206,53 +178,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#e1413a',
     marginLeft: 6,
   },
+  logoutButtonContainer: {
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    borderTopColor: '#ddd',
+  },
   logoutButton: {
-    marginTop: 16,
     backgroundColor: '#e74c3c',
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 20,
-    width: '90%',
-    alignSelf: 'center',
+    width: '80%',
   },
   logoutText: {
     color: '#fff',
     fontWeight: '700',
   },
-
-  dropdownContainer: {
-    backgroundColor: '#f9f9f9',
-    marginHorizontal: 32,
-    borderRadius: 12,
-    paddingVertical: 10,
-    elevation: 2,
-    marginTop: 6,
-  },
-  radioOption: {
+  menuItemCompact: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  },
-  radioCircle: {
-    height: 18,
-    width: 18,
-    borderRadius: 9,
-    borderWidth: 2,
-    borderColor: '#e1413a',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  selectedRb: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#e1413a',
-  },
-  radioText: {
-    marginLeft: 12,
-    fontSize: 15,
-    color: '#222',
+    backgroundColor: '#fafafa',
+    marginVertical: 6,
+    marginHorizontal: 8,
+    borderRadius: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    elevation: 1,
   },
 });
