@@ -129,7 +129,7 @@ const TabNavigator = ({ userEmail, onLogout }) => (
         ),
       }}
     />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Explore"
       component={Explore}
       options={{
@@ -137,7 +137,7 @@ const TabNavigator = ({ userEmail, onLogout }) => (
           <AntDesign name="search" size={size} color={color} />
         ),
       }}
-    />
+    /> */}
     {/* <Tab.Screen
       name="Meditation"
       component={Meditation}
