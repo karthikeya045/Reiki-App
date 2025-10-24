@@ -1,32 +1,19 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const images = [
   require('../../assets/symbols/dai-ko-myo.jpg'),
 ];
 
-const symbolNames = ["Dai Ko Myo (Master Symbol)"];
-
-const symbolDescriptions = [
-  "The master symbol associated with spiritual enlightenment, deep healing, and empowering all other symbols. It’s used to heal at the soul level, align purpose, and strengthen attunements.",
-];
-
-const symbolBulletPoints = [
-  [
-    "Amplifies and refines all Reiki energy and symbols",
-    "Supports soul-level and lineage healing",
-    "Promotes spiritual growth and purpose alignment",
-    "Used in attunements to empower the channel",
-    "Excellent for chronic, deep-rooted patterns",
-  ],
-];
 
 const SecondLevel = () => {
   const [selected, setSelected] = useState(0);
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>SecondLevel</Text>
+  {/* <Text style={styles.title}>{t('secondLevelTitle')}</Text> */}
       {/* Scrollable description area */}
       <ScrollView style={styles.descriptionScroll}>
         <Image
@@ -36,11 +23,11 @@ const SecondLevel = () => {
           onError={() => console.log('Image failed to load')}
         />
 
-        <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
-        <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
+        <Text style={styles.symbolName}>{t(`symbols.${selected}.name`)}</Text>
+        <Text style={styles.symbolDesc}>{t(`symbols.${selected}.description`)}</Text>
 
         <View style={styles.bulletContainer}>
-          {symbolBulletPoints[selected].map((point, idx) => (
+          {((t(`symbols.${selected}.bullets`, { returnObjects: true }) || []) ).map((point, idx) => (
             <View key={idx} style={styles.bulletRow}>
               <Text style={styles.bullet}>{'\u2022'}</Text>
               <Text style={styles.bulletText}>{point}</Text>
@@ -56,7 +43,7 @@ const SecondLevel = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={[
             styles.thumbContainer,
-            images.length <= 3 ? { justifyContent: 'center' } : {}
+            images.length <= 3 ? { justifyContent: 'center' } : {},
           ]}
         >
           {images.map((img, idx) => (
@@ -84,9 +71,8 @@ const SecondLevel = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: StatusBar.currentHeight + 10,
     backgroundColor: '#f0f4f8',
-    paddingTop: StatusBar.currentHeight + 10
   },
   title: {
     fontSize: 24,
@@ -107,7 +93,7 @@ const styles = StyleSheet.create({
   },
   descriptionScroll: {
     marginHorizontal: 16,
-    maxHeight: 625, // max height for description scroll area
+    maxHeight: 625,
     marginBottom: 20,
     borderColor: 'lightgray',
     borderWidth: 0.3,

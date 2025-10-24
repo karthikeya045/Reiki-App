@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     justifyContent: 'center',
-    backgroundColor: '#f7f9fc',
+    backgroundColor: '#f0f2f5',
     paddingTop: StatusBar.currentHeight + 8,
   },
   row: {
@@ -88,11 +88,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   tileText: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'white',
-    fontWeight: '700',
+    fontWeight: '800',
     textAlign: 'center',
-    letterSpacing: 0.3,
+    letterSpacing: 0.5,
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1,
   },
 });
 

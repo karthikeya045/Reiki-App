@@ -22,6 +22,8 @@ import ChakraHealing from './Screens/ChakraHealing';
 import Tokens from './Screens/Tokens';
 import TechniquesList from './Screens/TechniquesList';
 import LoginPage from './Screens/LoginPage';
+import EditProfileScreen from './Screens/EditProfileScreen';
+import { LanguageProvider } from '../services/LanguageContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -91,6 +93,22 @@ const HomeStack = () => (
   </Stack.Navigator>
 );
 
+const ProfileStack = ({ userEmail, onLogout }) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="ProfileMain"
+      // render Profile so we can inject props like userEmail
+      children={(props) => <Profile {...props} userEmail={userEmail} onLogout={onLogout} />}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="EditProfileScreen"
+      component={EditProfileScreen}
+      options={{ headerShown: false }}
+    />
+  </Stack.Navigator>
+);
+
 const TabNavigator = ({ userEmail, onLogout }) => (
   <Tab.Navigator
     initialRouteName="HomeTab"
@@ -130,8 +148,8 @@ const TabNavigator = ({ userEmail, onLogout }) => (
     /> */}
     <Tab.Screen
       name="Profile"
-      // Use a render callback so we can inject props
-      children={(props) => <Profile {...props} userEmail={userEmail} onLogout={onLogout} />}
+      // Use a stack so Profile can navigate to EditProfileScreen
+      children={(props) => <ProfileStack {...props} userEmail={userEmail} onLogout={onLogout} />}
       options={{
         tabBarIcon: ({ color, size }) => (
           <AntDesign name="user" size={size} color={color} />
@@ -156,7 +174,8 @@ const Navigator = () => {
   };
 
   return (
-    <NavigationContainer>
+    <LanguageProvider>
+      <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isSignedIn ? (
           <Stack.Screen name="Login">
@@ -168,7 +187,8 @@ const Navigator = () => {
           </Stack.Screen>
         )}
       </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    </LanguageProvider>
   );
 };
 

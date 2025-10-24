@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Switch } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,17 +7,35 @@ const menuItems = [
   // { icon: 'city', label: 'City', subtitle: 'Select your city' },
   { icon: 'bell', label: 'Notifications', badge: true },
   { icon: 'newspaper', label: 'Language' },
-  { icon: 'trophy', label: 'Terms & Conditions' },
+  { icon: 'trophy', label: 'Theme' },
   { icon: 'pencil', label: 'Privacy Policy' },
   { icon: 'help-circle', label: 'About Us' },
   { icon: 'calendar-remove', label: 'Contact Us' },
 ];
 
+import { LanguageContext } from '../../services/LanguageContext';
+
 const Profile = ({ onLogout }) => {
   const navigation = useNavigation();
 
+  const { language, setLanguage } = useContext(LanguageContext);
   const [languageDropdownVisible, setLanguageDropdownVisible] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('English'); // default language
+  // local display value (English/Telugu)
+  const [selectedLanguage, setSelectedLanguage] = useState(language === 'te' ? 'Telugu' : 'English'); // default
+
+  // Theme toggle state
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  // keep local label in sync if language changes elsewhere
+  useEffect(() => {
+    setSelectedLanguage(language === 'te' ? 'Telugu' : 'English');
+  }, [language]);
+
+  // handle toggle of theme switch
+  const toggleThemeSwitch = () => {
+    setIsDarkTheme((prev) => !prev);
+    // optionally, add logic here to update theme globally (e.g., context or redux)
+  };
 
   const handleLogout = () => {
     if (typeof onLogout === 'function') onLogout();
@@ -30,6 +48,9 @@ const Profile = ({ onLogout }) => {
 
   const handleLanguageSelect = (lang) => {
     setSelectedLanguage(lang);
+    // persist as short code for consumers: Telugu -> 'te', English -> 'en'
+    const code = lang === 'Telugu' ? 'te' : 'en';
+    if (typeof setLanguage === 'function') setLanguage(code);
     setLanguageDropdownVisible(false);
   };
 
@@ -91,6 +112,23 @@ const Profile = ({ onLogout }) => {
                       </TouchableOpacity>
                     </View>
                   )}
+                </View>
+              );
+            }
+
+            if (item.label === 'Theme') {
+              return (
+                <View key={`theme-${idx}`} style={styles.menuItem}>
+                  <Icon name={item.icon} size={26} color="#e1413a" />
+                  <View style={styles.menuText}>
+                    <Text style={styles.menuLabel}>{item.label}</Text>
+                  </View>
+                  <Switch
+                    trackColor={{ false: '#767577', true: '#e1413a' }}
+                    thumbColor={isDarkTheme ? '#fff' : '#f4f3f4'}
+                    onValueChange={toggleThemeSwitch}
+                    value={isDarkTheme}
+                  />
                 </View>
               );
             }
@@ -176,11 +214,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     width: '90%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   logoutText: {
     color: '#fff',
-    fontWeight: '700'
+    fontWeight: '700',
   },
 
   dropdownContainer: {
