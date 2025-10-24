@@ -97,12 +97,12 @@ const getStyles = (dark) => StyleSheet.create({
     marginBottom: 12,
   },
   descriptionScroll: {
-    marginHorizontal: 16,
-    maxHeight: 625,
+    // marginHorizontal: 16,
+    maxHeight: 580,
     marginBottom: 20,
     borderColor: dark ? '#1f2937' : 'lightgray',
-    borderWidth: 0.3,
-    borderRadius: 12,
+    // borderWidth: 0.3,
+    // borderRadius: 12,
     padding: 12,
   },
   symbolName: {

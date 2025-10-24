@@ -139,7 +139,7 @@ const ReikiTimer = () => {
             </View>
 
             <Text style={styles.remainingText}>
-                Remaining: {slide - remainingIterations}
+                Remaining Intervals: {slide - remainingIterations}
             </Text>
         </View>
     </ScrollView>

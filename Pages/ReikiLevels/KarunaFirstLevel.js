@@ -49,15 +49,15 @@ const KarunaFirstLevel = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={images[selected]}
-        style={styles.mainImage}
-        resizeMode="contain"
-        onError={() => console.log('Image failed to load')}
-      />
 
       {/* Scrollable description area */}
       <ScrollView style={styles.descriptionScroll}>
+        <Image
+          source={images[selected]}
+          style={styles.mainImage}
+          resizeMode="contain"
+          onError={() => console.log('Image failed to load')}
+        />
         <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
         <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
 
@@ -95,6 +95,7 @@ const KarunaFirstLevel = () => {
                 style={styles.thumbnail}
                 resizeMode="cover"
               />
+              <Text style={{textAlign:'center'}}>{symbolNames[idx]}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   descriptionScroll: {
     marginHorizontal: 16,
-    maxHeight: 225, // max height for description scroll area
+    maxHeight: 625, // max height for description scroll area
     marginBottom: 20,
   },
   symbolName: {

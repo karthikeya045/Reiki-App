@@ -22,7 +22,7 @@ const symbolBulletPoints = [
     "Creates energetic protection/shielding",
     "Seals treatments at the end",
     "Draw over pain areas to reduce discomfort",
-    "Use at the start to ‘switch on’ power",
+    "Use at the start to 'switch on' power",
   ],
   [
     "Balances left–right brain and emotions",
@@ -47,15 +47,14 @@ const FirstLevel = () => {
     <View style={styles.container}>
       <Text style={styles.title}>FirstLevel</Text>
 
-      <Image
-        source={images[selected]}
-        style={styles.mainImage}
-        resizeMode="contain"
-        onError={() => console.log('Image failed to load')}
-      />
-
       {/* Scrollable description area */}
       <ScrollView style={styles.descriptionScroll}>
+        <Image
+          source={images[selected]}
+          style={styles.mainImage}
+          resizeMode="contain"
+          onError={() => console.log('Image failed to load')}
+        />
         <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
         <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
 
@@ -93,6 +92,7 @@ const FirstLevel = () => {
                 style={styles.thumbnail}
                 resizeMode="cover"
               />
+              <Text style={{textAlign:'center'}}>{symbolNames[idx]}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   descriptionScroll: {
     marginHorizontal: 16,
-    maxHeight: 225, // max height for description scroll area
+    maxHeight: 625, // max height for description scroll area
     marginBottom: 20,
   },
   symbolName: {
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#cbd5e1',
+    alignItems: 'center',
   },
   selectedThumbWrapper: {
     borderColor: '#2563eb',

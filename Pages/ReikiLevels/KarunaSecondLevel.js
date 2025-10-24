@@ -52,6 +52,38 @@ const symbolBulletPoints = [
     "Supports memory, focus, and integration",
     "Balances hemispheres for study and logic+intuition",
     "Place over brow during learning/reading",
+    "Use before exams and complex problem - solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
+    "Use before exams and complex problem-solving",
+    "Supports memory, focus, and integration",
+    "Balances hemispheres for study and logic+intuition",
+    "Place over brow during learning/reading",
     "Use before exams and complex problem-solving",
   ],
   [
@@ -103,6 +135,7 @@ const KarunaSecondLevel = () => {
 
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.pageScroll}>
       <Image
         source={images[selected]}
         style={styles.mainImage}
@@ -111,7 +144,7 @@ const KarunaSecondLevel = () => {
       />
 
       {/* Scrollable description area */}
-      <ScrollView style={styles.descriptionScroll}>
+      
         <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
         <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
 
@@ -175,9 +208,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 12,
   },
-  descriptionScroll: {
+  pageScroll: {
     marginHorizontal: 16,
-    maxHeight: 225, // max height for description scroll area
+    maxHeight: 625, // max height for description scroll area
     marginBottom: 20,
   },
   symbolName: {
