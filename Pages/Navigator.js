@@ -24,6 +24,7 @@ import TechniquesList from './Screens/TechniquesList';
 import LoginPage from './Screens/LoginPage';
 import EditProfileScreen from './Screens/EditProfileScreen';
 import { LanguageProvider } from '../services/LanguageContext';
+import { ThemeProvider } from '../services/ThemeContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -174,8 +175,9 @@ const Navigator = () => {
   };
 
   return (
-    <LanguageProvider>
-      <NavigationContainer>
+    <ThemeProvider>
+      <LanguageProvider>
+        <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isSignedIn ? (
           <Stack.Screen name="Login">
@@ -187,8 +189,9 @@ const Navigator = () => {
           </Stack.Screen>
         )}
       </Stack.Navigator>
-      </NavigationContainer>
-    </LanguageProvider>
+        </NavigationContainer>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 };
 

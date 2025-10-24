@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '../../services/ThemeContext';
 
 const images = [
   require('../../assets/symbols/dai-ko-myo.jpg'),
@@ -10,12 +11,16 @@ const images = [
 const SecondLevel = () => {
   const [selected, setSelected] = useState(0);
   const { t } = useTranslation();
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === 'dark';
+  const styles = getStyles(isDark);
 
   return (
     <View style={styles.container}>
   {/* <Text style={styles.title}>{t('secondLevelTitle')}</Text> */}
       {/* Scrollable description area */}
       <ScrollView style={styles.descriptionScroll}>
+        <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={isDark ? '#0b1220' : '#f0f4f8'} />
         <Image
           source={images[selected]}
           style={styles.mainImage}
@@ -68,34 +73,34 @@ const SecondLevel = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (dark) => StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight + 10,
-    backgroundColor: '#f0f4f8',
+    backgroundColor: dark ? '#071021' : '#f0f4f8',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
     fontWeight: '700',
-    color: '#1e293b',
+    color: dark ? '#e6eef8' : '#1e293b',
     textAlign: 'center',
   },
   mainImage: {
     width: 200,
     height: 200,
     alignSelf: 'center',
-    borderColor: '#334155',
+    borderColor: dark ? '#334155' : '#334155',
     borderWidth: 1.5,
     borderRadius: 12,
-    backgroundColor: '#fff',
+    backgroundColor: dark ? '#0b1220' : '#fff',
     marginBottom: 12,
   },
   descriptionScroll: {
     marginHorizontal: 16,
     maxHeight: 625,
     marginBottom: 20,
-    borderColor: 'lightgray',
+    borderColor: dark ? '#1f2937' : 'lightgray',
     borderWidth: 0.3,
     borderRadius: 12,
     padding: 12,
@@ -103,13 +108,13 @@ const styles = StyleSheet.create({
   symbolName: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1e293b',
+    color: dark ? '#e6eef8' : '#1e293b',
     textAlign: 'center',
     marginBottom: 6,
   },
   symbolDesc: {
     fontSize: 16,
-    color: '#475569',
+    color: dark ? '#cbd5e1' : '#475569',
     textAlign: 'center',
     marginBottom: 12,
   },
@@ -123,12 +128,12 @@ const styles = StyleSheet.create({
   },
   bullet: {
     fontSize: 16,
-    color: '#475569',
+    color: dark ? '#cbd5e1' : '#475569',
     marginRight: 8,
   },
   bulletText: {
     fontSize: 16,
-    color: '#475569',
+    color: dark ? '#cbd5e1' : '#475569',
   },
   thumbnailWrapper: {
     position: 'absolute',
@@ -143,7 +148,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#cbd5e1',
+    borderColor: dark ? '#334155' : '#cbd5e1',
   },
   selectedThumbWrapper: {
     borderColor: '#2563eb',

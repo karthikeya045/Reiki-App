@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Switch } from 'react-native';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { LanguageContext } from '../../services/LanguageContext';
+import { ThemeContext } from '../../services/ThemeContext';
 
 const menuItems = [
   { icon: 'newspaper', label: 'Language' },
@@ -16,12 +17,13 @@ const Profile = ({ onLogout }) => {
   const navigation = useNavigation();
   const { language, setLanguage } = useContext(LanguageContext);
 
-  const [isTelugu, setIsTelugu] = useState(language === 'te');
+  const [isTelugu, setIsTelugu] = React.useState(language === 'te');
   useEffect(() => {
     setIsTelugu(language === 'te');
   }, [language]);
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const isDarkTheme = theme === 'dark';
 
   const toggleLanguageSwitch = () => {
     const newValue = !isTelugu;
@@ -31,7 +33,7 @@ const Profile = ({ onLogout }) => {
   };
 
   const toggleThemeSwitch = () => {
-    setIsDarkTheme((prev) => !prev);
+    if (typeof setTheme === 'function') setTheme(isDarkTheme ? 'light' : 'dark');
   };
 
   const handleLogout = () => {
@@ -40,8 +42,8 @@ const Profile = ({ onLogout }) => {
   };
 
   return (
-    <View style={styles.outerContainer}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+    <View style={[styles.outerContainer, isDarkTheme ? { backgroundColor: '#0f1720' } : { backgroundColor: '#fff' }]}>
+      <StatusBar barStyle={isDarkTheme ? 'light-content' : 'dark-content'} backgroundColor={isDarkTheme ? '#0f1720' : '#fff'} />
       <View style={styles.flexContainer}>
         <ScrollView
           style={styles.container}
@@ -49,12 +51,12 @@ const Profile = ({ onLogout }) => {
           showsVerticalScrollIndicator={true}
         >
           {/* Header */}
-          <View style={styles.header}>
+          <View style={[styles.header, isDarkTheme ? { backgroundColor: 'transparent' } : { backgroundColor: '#fff' }]}>
             <View style={styles.avatarCircle}></View>
             <View style={styles.headerText}>
-              <Text style={styles.profileName}>karthik</Text>
+              <Text style={[styles.profileName, isDarkTheme ? { color: '#fff' } : { color: '#000' }]}>karthik</Text>
               <TouchableOpacity onPress={() => navigation.navigate('EditProfileScreen')}>
-                <Text style={styles.editProfile}>Edit Profile</Text>
+                <Text style={[styles.editProfile, isDarkTheme ? { color: '#b3bcc6' } : { color: '#888' }]}>Edit Profile</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -128,7 +130,6 @@ export default Profile;
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   flexContainer: {
     flex: 1,
@@ -144,7 +145,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 22,
-    backgroundColor: '#fff',
   },
   avatarCircle: {
     width: 64,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: { marginLeft: 18 },
-  profileName: { fontSize: 18, fontWeight: 'bold' },
+  profileName: { fontSize: 18, fontWeight: 'bold', color: '#f8fafc' },
   editProfile: { color: '#888', fontSize: 14 },
   menuList: { marginTop: 12 },
   menuItem: {
