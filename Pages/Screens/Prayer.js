@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 18,
     backgroundColor: '#fafcfe',
+    paddingTop: 30,
   },
   mainHeading: {
     fontWeight: 'bold',

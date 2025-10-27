@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FontAwesome, Fontisto } from '@expo/vector-icons';
 
 
 export default function EditProfileScreen(props) {
@@ -18,13 +19,13 @@ export default function EditProfileScreen(props) {
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.headerText}>My Account</Text>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Text style={styles.headerEditText}>Edit</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {/* Full Name */}
       <View style={styles.row}>
-        <Icon name="account-outline" size={22} color="#e1413a" />
+        <FontAwesome name="user-o" size={22} color="#e1413a" />
         <Text style={styles.label}>Full Name</Text>
         <TextInput
           value={name}
@@ -35,7 +36,7 @@ export default function EditProfileScreen(props) {
       </View>
       {/* Birth Date */}
       <View style={styles.row}>
-        <Icon name="calendar-range" size={22} color="#e1413a" />
+        <Fontisto name="date" size={22} color="#e1413a" />
         <Text style={styles.label}>Birth Date</Text>
         <TextInput
           value={birthDate}
@@ -46,18 +47,18 @@ export default function EditProfileScreen(props) {
       </View>
       {/* Gender Selection */}
       <View style={styles.genderRow}>
-  <Icon name="human-male" size={28} color={gender === 'male' ? "#e1413a" : "#9e9e9e"} />
+        <FontAwesome name="male" size={28} color={gender === 'male' ? "#e1413a" : "#9e9e9e"} />
         <TouchableOpacity style={styles.genderButton} onPress={() => setGender('male')}>
           <Text style={[styles.genderText, gender === 'male' && styles.genderSelected]}>Male</Text>
         </TouchableOpacity>
-  <Icon name="human-female" size={28} color={gender === 'female' ? "#e1413a" : "#9e9e9e"} />
+        <FontAwesome name="female" size={28} color={gender === 'female' ? "#e1413a" : "#9e9e9e"} />
         <TouchableOpacity style={styles.genderButton} onPress={() => setGender('female')}>
           <Text style={[styles.genderText, gender === 'female' && styles.genderSelected]}>Female</Text>
         </TouchableOpacity>
       </View>
       {/* Mobile */}
       <View style={styles.row}>
-  <Icon name="phone" size={22} color="#e1413a" />
+        <FontAwesome name="mobile-phone" size={22} color="#e1413a" />
         <Text style={styles.label}>Mobile</Text>
         <TextInput
           value={mobile}
@@ -66,13 +67,10 @@ export default function EditProfileScreen(props) {
           keyboardType="phone-pad"
           placeholder="Mobile Number"
         />
-        <TouchableOpacity>
-          <Text style={styles.editBtn}>Edit</Text>
-        </TouchableOpacity>
       </View>
       {/* Email */}
       <View style={styles.row}>
-  <Icon name="email-outline" size={22} color="#e1413a" />
+        <Fontisto name="email" size={22} color="#e1413a" />
         <Text style={styles.label}>Email</Text>
         <TextInput
           value={email}
@@ -81,9 +79,6 @@ export default function EditProfileScreen(props) {
           keyboardType="email-address"
           placeholder="Email Address"
         />
-        <TouchableOpacity>
-          <Text style={styles.editBtn}>Edit</Text>
-        </TouchableOpacity>
       </View>
       {/* Save Button */}
       <TouchableOpacity style={styles.saveBtn} onPress={() => onSave({ name, birthDate, gender, mobile, email })}>
@@ -138,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#999',
     marginLeft: 12,
-    width: 95,
+    width: 80,
   },
   value: {
     flex: 1,
