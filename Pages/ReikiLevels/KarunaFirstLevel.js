@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '../../services/ThemeContext';
 
 const images = [
   require('../../assets/symbols/zonar.jpg'),
@@ -8,61 +10,32 @@ const images = [
   require('../../assets/symbols/Rama.jpg'),
 ];
 
-const symbolNames = ["Zonar", "Halu", "Harth", "Rama"];
-
-const symbolDescriptions = [
-  "Zonar – Heals at the cellular and karmic level; useful for early-life and deep-seated patterns; gently unwinds stuck energies.",
-  "Halu – An intensified Zonar; excellent for dissolving illusions, psychic protection, trauma release, and clearing attachments.",
-  "Harth – Heart opening and compassion; supports emotional healing, relationships, forgiveness, and self-love.",
-  "Rama – Grounding, manifestation, and balancing masculine–feminine; supports boundaries, decisiveness, and stability.",
-];
-
-const symbolBulletPoints = [
-  [
-    "Karmic and cellular-level healing",
-    "Helpful for chronic, repeating patterns",
-    "Soothes inner-child and early-life wounds",
-    "Combine with Harth for gentle emotional release",
-  ],
-  [
-    "Strong psychic protection and clearing",
-    "Cuts through fears, illusions, and attachments",
-    "Great before sleep and after dense interactions",
-    "Amplifies Zonar for deeper extraction",
-  ],
-  [
-    "Opens heart center and nurtures compassion",
-    "Supports forgiveness and relationship harmony",
-    "Relieves grief, loneliness, and resentment",
-    "Place over heart/thymus for emotional balance",
-  ],
-  [
-    "Grounds and stabilizes energy",
-    "Enhances manifestation and confident action",
-    "Balances masculine–feminine polarity",
-    "Use at base feet/hips to anchor after sessions",
-  ],
-];
+// Text content is provided via i18n resources under `karunaFirstLevelSymbols`
 
 const KarunaFirstLevel = () => {
   const [selected, setSelected] = useState(0);
+  const { t } = useTranslation();
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === 'dark';
+  const styles = getStyles(isDark);
 
   return (
     <View style={styles.container}>
 
       {/* Scrollable description area */}
       <ScrollView style={styles.descriptionScroll}>
+        <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={isDark ? '#0b1220' : '#f0f4f8'} />
         <Image
           source={images[selected]}
           style={styles.mainImage}
           resizeMode="contain"
           onError={() => console.log('Image failed to load')}
         />
-        <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
-        <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
+        <Text style={styles.symbolName}>{t(`karunaFirstLevelSymbols.${selected}.name`)}</Text>
+        <Text style={styles.symbolDesc}>{t(`karunaFirstLevelSymbols.${selected}.description`)}</Text>
 
         <View style={styles.bulletContainer}>
-          {symbolBulletPoints[selected].map((point, idx) => (
+          {(t(`karunaFirstLevelSymbols.${selected}.bullets`, { returnObjects: true }) || []).map((point, idx) => (
             <View key={idx} style={styles.bulletRow}>
               <Text style={styles.bullet}>{'\u2022'}</Text>
               <Text style={styles.bulletText}>{point}</Text>
@@ -95,7 +68,7 @@ const KarunaFirstLevel = () => {
                 style={styles.thumbnail}
                 resizeMode="cover"
               />
-              <Text style={{textAlign:'center'}}>{symbolNames[idx]}</Text>
+              <Text style={[{textAlign:'center'}, { color: isDark ? '#e6eef8' : '#1e293b' }]}>{t(`karunaFirstLevelSymbols.${idx}.name`)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -170,6 +143,82 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#cbd5e1',
+  },
+  selectedThumbWrapper: {
+    borderColor: '#2563eb',
+  },
+  thumbnail: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+  },
+});
+
+const getStyles = (dark) => StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight + 10,
+    backgroundColor: dark ? '#071021' : '#f0f4f8',
+  },
+  mainImage: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    borderColor: dark ? '#334155' : '#334155',
+    borderWidth: 1.5,
+    borderRadius: 12,
+    backgroundColor: dark ? '#0b1220' : '#fff',
+    marginBottom: 12,
+  },
+  descriptionScroll: {
+    marginHorizontal: 16,
+    maxHeight: 625,
+    marginBottom: 20,
+  },
+  symbolName: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: dark ? '#e6eef8' : '#1e293b',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  symbolDesc: {
+    fontSize: 16,
+    color: dark ? '#cbd5e1' : '#475569',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  bulletContainer: {
+    paddingLeft: 12,
+  },
+  bulletRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  bullet: {
+    fontSize: 16,
+    color: dark ? '#cbd5e1' : '#475569',
+    marginRight: 8,
+  },
+  bulletText: {
+    fontSize: 16,
+    color: dark ? '#cbd5e1' : '#475569',
+  },
+  thumbnailWrapper: {
+    position: 'absolute',
+    bottom: 10,
+    width: '100%',
+    alignItems: 'center',
+  },
+  thumbContainer: {
+    paddingHorizontal: 10,
+  },
+  thumbWrapper: {
+    marginHorizontal: 6,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: dark ? '#334155' : '#cbd5e1',
   },
   selectedThumbWrapper: {
     borderColor: '#2563eb',

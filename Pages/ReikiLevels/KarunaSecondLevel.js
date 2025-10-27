@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '../../services/ThemeContext';
 
 const images = [
   require('../../assets/symbols/Gnosa.jpg'),
@@ -25,113 +27,14 @@ const images = [
   // require('../../assets/symbols/ReikiCircle.jpg'),
 ];
 
-const symbolNames = [
-  "Gnosa",
-  "Kriya",
-  "Lava",
-  "Shanti",
-  "OM",
-  "Johre",
-  "Motor Zanon",
-  "Hosanna",
-];
-
-const symbolDescriptions = [
-  "Gnosa - Enhances learning, insight, and integration; supports brain balancing for study, exams, and bridging knowledge with intuition.",
-  "Kriya - Deep physical clearing and detox; accelerates recovery, supports organ cleansing, and improves energy flow through the body.",
-  "Lava - Purifying transformative fire; burns away stagnant energy and helps transmute anger or intense emotions into creative force.",
-  "Shanti - Peace and tranquility; calms the nervous system, invites harmony, and eases conflict within and around you.",
-  "OM - Primordial vibration and unity; aligns with the universal field, centers the mind, and elevates meditation practices.",
-  "Johre - Clears heavy energies, cords, and attachments; brightens the aura and raises one’s vibration after dense encounters.",
-  "Motor Zanon - Repairs etheric tears and seals the aura; useful post-surgery, post-trauma, and after intense energetic work.",
-  "Hosanna - Uplifts the heart and spirit; restores hope, faith, and gratitude, especially in periods of challenge.",
-];
-
-const symbolBulletPoints = [
-  [
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem - solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-    "Supports memory, focus, and integration",
-    "Balances hemispheres for study and logic+intuition",
-    "Place over brow during learning/reading",
-    "Use before exams and complex problem-solving",
-  ],
-  [
-    "Accelerates detox and physical healing",
-    "Clears blocks in meridians and chakras",
-    "Great for chronic fatigue and sluggish flow",
-    "Combine with OM to stabilize after clearing",
-  ],
-  [
-    "Transforms heavy emotions into creative energy",
-    "Good for anger release and vitality",
-    "Use over liver/solar plexus for purifying",
-    "Pair with Shanti to soothe after intensity",
-  ],
-  [
-    "Restores peace and serenity",
-    "Eases insomnia and anxious loops",
-    "Send to rooms/relationships for harmony",
-    "Wonderful at session end to integrate",
-  ],
-  [
-    "Centers meditation and mantra practice",
-    "Harmonizes field with universal vibration",
-    "Clears mental noise and aligns intention",
-    "Place above crown or in room before work",
-  ],
-  [
-    "Removes cords and dense residues",
-    "Brightens aura and raises vibration",
-    "Use after crowds or heavy sessions",
-    "Follow with Motor Zanon to seal the field",
-  ],
-  [
-    "Repairs and seals tears in the aura",
-    "Excellent post-trauma or surgery",
-    "Strengthens boundaries and containment",
-    "Finish with OM or Shanti for smoothness",
-  ],
-  [
-    "Uplifts mood and restores hope",
-    "Invites gratitude and devotion of the heart",
-    "Helpful during setbacks or grief",
-    "Place at heart and crown for uplift",
-  ],
-];
+// Text provided via i18n resources under `karunaSecondLevelSymbols`
 
 const KarunaSecondLevel = () => {
   const [selected, setSelected] = useState(0);
+  const { t } = useTranslation();
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === 'dark';
+  const styles = getStyles(isDark);
 
   return (
     <View style={styles.container}>
@@ -145,11 +48,11 @@ const KarunaSecondLevel = () => {
 
       {/* Scrollable description area */}
       
-        <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
-        <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
+        <Text style={styles.symbolName}>{t(`karunaSecondLevelSymbols.${selected}.name`)}</Text>
+        <Text style={styles.symbolDesc}>{t(`karunaSecondLevelSymbols.${selected}.description`)}</Text>
 
         <View style={styles.bulletContainer}>
-          {symbolBulletPoints[selected].map((point, idx) => (
+          {(t(`karunaSecondLevelSymbols.${selected}.bullets`, { returnObjects: true }) || []).map((point, idx) => (
             <View key={idx} style={styles.bulletRow}>
               <Text style={styles.bullet}>{'\u2022'}</Text>
               <Text style={styles.bulletText}>{point}</Text>
@@ -182,7 +85,7 @@ const KarunaSecondLevel = () => {
                 style={styles.thumbnail}
                 resizeMode="cover"
               />
-              <Text style={{textAlign:'center'}}>{symbolNames[idx]}</Text>
+              <Text style={[{textAlign:'center'}, { color: isDark ? '#e6eef8' : '#1e293b' }]}>{t(`karunaSecondLevelSymbols.${idx}.name`)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -256,6 +159,81 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#cbd5e1',
+  },
+  selectedThumbWrapper: {
+    borderColor: '#2563eb',
+  },
+  thumbnail: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+  },
+});
+
+const getStyles = (dark) => StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight + 10,
+    backgroundColor: dark ? '#071021' : '#f0f4f8',
+  },
+  mainImage: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
+    borderColor: dark ? '#334155' : '#334155',
+    borderWidth: 1.5,
+    borderRadius: 12,
+    backgroundColor: dark ? '#0b1220' : '#fff',
+    marginBottom: 12,
+  },
+  pageScroll: {
+    marginHorizontal: 16,
+    maxHeight: 560,
+    marginBottom: 20,
+  },
+  symbolName: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: dark ? '#e6eef8' : '#1e293b',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  symbolDesc: {
+    fontSize: 16,
+    color: dark ? '#cbd5e1' : '#475569',
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  bulletContainer: {
+    paddingLeft: 12,
+  },
+  bulletRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  bullet: {
+    fontSize: 16,
+    color: dark ? '#cbd5e1' : '#475569',
+    marginRight: 8,
+  },
+  bulletText: {
+    fontSize: 16,
+    color: dark ? '#cbd5e1' : '#475569',
+  },
+  thumbnailWrapper: {
+    position: 'absolute',
+    bottom: 10,
+    width: '100%',
+  },
+  thumbContainer: {
+    paddingHorizontal: 10,
+  },
+  thumbWrapper: {
+    marginHorizontal: 6,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: dark ? '#334155' : '#cbd5e1',
   },
   selectedThumbWrapper: {
     borderColor: '#2563eb',

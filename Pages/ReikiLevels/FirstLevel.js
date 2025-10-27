@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '../../services/ThemeContext';
 
 const images = [
   require('../../assets/symbols/cho-ku-rei.jpg'),
@@ -7,59 +9,33 @@ const images = [
   require('../../assets/symbols/hon-sha-ze-sho-nen.jpg'),
 ];
 
-const symbolNames = ["cho-ku-rei", "sei-hei-ki", "hon-sha-ze-sho-nen"];
-
-const symbolDescriptions = [
-  "Cho Ku Rei (Power Symbol) – Amplifies energy, clears spaces, protects, and accelerates healing. Often drawn at the start and end to enhance the flow.",
-  "Sei Hei Ki (Harmony Symbol) – Balances mind and emotions, supports mental clarity, releases negative patterns, and aids emotional healing.",
-  "Hon Sha Ze Sho Nen (Distant Symbol) - Connects beyond time and space for distant healing, inner-child work, and transforming past patterns.",
-];
-
-const symbolBulletPoints = [
-  [
-    "Boosts the intensity of Reiki flow",
-    "Cleanses and charges rooms, food, water, crystals",
-    "Creates energetic protection/shielding",
-    "Seals treatments at the end",
-    "Draw over pain areas to reduce discomfort",
-    "Use at the start to 'switch on' power",
-  ],
-  [
-    "Balances left–right brain and emotions",
-    "Supports release of stress, anxiety, and habits",
-    "Helpful for sleep and mental clarity",
-    "Can be placed over solar plexus/heart for calm",
-    "Pairs well after Cho Ku Rei to harmonize",
-  ],
-  [
-    "Enables distant and across-time healing",
-    "Send Reiki to future events and past memories",
-    "Useful for relationship and inner-child work",
-    "Connects to clients not physically present",
-    "Combine with Cho Ku Rei to amplify at a distance",
-  ],
-];
+// Text and bullets are provided via i18n resource files. See `SecondLevel.js` for the same pattern.
 
 const FirstLevel = () => {
   const [selected, setSelected] = useState(0);
+  const { t } = useTranslation();
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === 'dark';
+  const styles = getStyles(isDark);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>FirstLevel</Text>
+      {/* <Text style={styles.title}>{t('firstLevelTitle')}</Text> */}
 
       {/* Scrollable description area */}
       <ScrollView style={styles.descriptionScroll}>
+        <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={isDark ? '#0b1220' : '#f0f4f8'} />
         <Image
           source={images[selected]}
           style={styles.mainImage}
           resizeMode="contain"
           onError={() => console.log('Image failed to load')}
         />
-        <Text style={styles.symbolName}>{symbolNames[selected]}</Text>
-        <Text style={styles.symbolDesc}>{symbolDescriptions[selected]}</Text>
+        <Text style={styles.symbolName}>{t(`firstLevelSymbols.${selected}.name`)}</Text>
+        <Text style={styles.symbolDesc}>{t(`firstLevelSymbols.${selected}.description`)}</Text>
 
         <View style={styles.bulletContainer}>
-          {symbolBulletPoints[selected].map((point, idx) => (
+          {(t(`firstLevelSymbols.${selected}.bullets`, { returnObjects: true }) || []).map((point, idx) => (
             <View key={idx} style={styles.bulletRow}>
               <Text style={styles.bullet}>{'\u2022'}</Text>
               <Text style={styles.bulletText}>{point}</Text>
@@ -75,7 +51,7 @@ const FirstLevel = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={[
             styles.thumbContainer,
-            images.length <= 3 ? { justifyContent: 'center' } : {}
+            images.length <= 3 ? { justifyContent: 'center' } : {},
           ]}
         >
           {images.map((img, idx) => (
@@ -92,7 +68,7 @@ const FirstLevel = () => {
                 style={styles.thumbnail}
                 resizeMode="cover"
               />
-              <Text style={{textAlign:'center'}}>{symbolNames[idx]}</Text>
+              <Text style={[{ textAlign: 'center' }, { color: isDark ? '#e6eef8' : '#1e293b' }]}>{t(`firstLevelSymbols.${idx}.name`)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -101,45 +77,45 @@ const FirstLevel = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (dark) => StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#f0f4f8',
-    paddingTop: StatusBar.currentHeight
+    paddingTop: StatusBar.currentHeight + 10,
+    backgroundColor: dark ? '#071021' : '#f0f4f8',
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
     fontWeight: '700',
-    color: '#1e293b',
+    color: dark ? '#e6eef8' : '#1e293b',
     textAlign: 'center',
   },
   mainImage: {
     width: 200,
     height: 200,
     alignSelf: 'center',
-    borderColor: '#334155',
+    borderColor: dark ? '#334155' : '#334155',
     borderWidth: 1.5,
     borderRadius: 12,
-    backgroundColor: '#fff',
+    backgroundColor: dark ? '#0b1220' : '#fff',
     marginBottom: 12,
   },
   descriptionScroll: {
-    marginHorizontal: 16,
-    maxHeight: 510, // max height for description scroll area
+    maxHeight: 580,
     marginBottom: 20,
+    borderColor: dark ? '#1f2937' : 'lightgray',
+    padding: 12,
   },
   symbolName: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1e293b',
+    color: dark ? '#e6eef8' : '#1e293b',
     textAlign: 'center',
     marginBottom: 6,
   },
   symbolDesc: {
     fontSize: 16,
-    color: '#475569',
+    color: dark ? '#cbd5e1' : '#475569',
     textAlign: 'center',
     marginBottom: 12,
   },
@@ -153,12 +129,12 @@ const styles = StyleSheet.create({
   },
   bullet: {
     fontSize: 16,
-    color: '#475569',
+    color: dark ? '#cbd5e1' : '#475569',
     marginRight: 8,
   },
   bulletText: {
     fontSize: 16,
-    color: '#475569',
+    color: dark ? '#cbd5e1' : '#475569',
   },
   thumbnailWrapper: {
     position: 'absolute',
@@ -173,7 +149,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#cbd5e1',
+    borderColor: dark ? '#334155' : '#cbd5e1',
     alignItems: 'center',
   },
   selectedThumbWrapper: {
