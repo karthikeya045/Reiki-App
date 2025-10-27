@@ -1,16 +1,16 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, StatusBar, Switch } from 'react-native';
 import React, { useContext, useEffect } from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { LanguageContext } from '../../services/LanguageContext';
 import { ThemeContext } from '../../services/ThemeContext';
 
 const menuItems = [
-  { icon: 'newspaper', label: 'Language' },
-  { icon: 'trophy', label: 'Dark Theme', subtitle: 'Enable dark interface' },
+  { icon: 'language', label: 'Language' },
+  { icon: 'theme-light-dark', label: 'Dark Theme', subtitle: 'Enable dark interface' },
   // { icon: 'pencil', label: 'Privacy Policy' },
-  { icon: 'help-circle', label: 'About Us' },
-  { icon: 'calendar-remove', label: 'Contact Us' },
+  { icon: 'information-variant-circle-outline', label: 'About Us' },
+  { icon: 'email-outline', label: 'Contact Us' },
 ];
 
 const Profile = ({ onLogout }) => {
@@ -67,7 +67,7 @@ const Profile = ({ onLogout }) => {
               if (item.label === 'Language') {
                 return (
                   <View key={`language-switch-${idx}`} style={styles.menuItemCompact}>
-                    <Icon name={item.icon} size={26} color="#e1413a" />
+                    <MaterialIcons name={item.icon} size={26} color="#e1413a" />
                     <View style={styles.menuText}>
                       <Text style={styles.menuLabel}>{item.label}</Text>
                       <Text style={styles.menuSubtitle}>{isTelugu ? 'Telugu' : 'English'}</Text>
@@ -85,7 +85,7 @@ const Profile = ({ onLogout }) => {
               if (item.label === 'Dark Theme') {
                 return (
                   <View key={`theme-${idx}`} style={styles.menuItemCompact}>
-                    <Icon name={item.icon} size={26} color="#e1413a" />
+                    <MaterialCommunityIcons name={item.icon} size={26} color="#e1413a" />
                     <View style={styles.menuText}>
                       <Text style={styles.menuLabel}>{item.label}</Text>
                       <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
@@ -102,7 +102,7 @@ const Profile = ({ onLogout }) => {
 
               return (
                 <TouchableOpacity key={idx} style={styles.menuItem}>
-                  <Icon name={item.icon} size={26} color="#e1413a" />
+                  <MaterialCommunityIcons name={item.icon} size={26} color="#e1413a" />
                   <View style={styles.menuText}>
                     <Text style={styles.menuLabel}>{item.label}</Text>
                     {item.subtitle && <Text style={styles.menuSubtitle}>{item.subtitle}</Text>}
