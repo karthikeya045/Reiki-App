@@ -25,6 +25,7 @@ import LoginPage from './Screens/LoginPage';
 import EditProfileScreen from './Screens/EditProfileScreen';
 import { LanguageProvider } from '../services/LanguageContext';
 import { ThemeProvider } from '../services/ThemeContext';
+import AboutContactUs from './Screens/AboutContactUs';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -102,11 +103,8 @@ const ProfileStack = ({ userEmail, onLogout }) => (
       children={(props) => <Profile {...props} userEmail={userEmail} onLogout={onLogout} />}
       options={{ headerShown: false }}
     />
-    <Stack.Screen
-      name="EditProfileScreen"
-      component={EditProfileScreen}
-      options={{ headerShown: false }}
-    />
+    <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="AboutContactUs" component={AboutContactUs} options={{ headerShown: false }} />
   </Stack.Navigator>
 );
 

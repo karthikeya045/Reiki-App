@@ -101,7 +101,8 @@ const Profile = ({ onLogout }) => {
               }
 
               return (
-                <TouchableOpacity key={idx} style={styles.menuItem}>
+                <TouchableOpacity key={idx} style={styles.menuItem}
+                onPress={() => navigation.navigate('AboutContactUs', { screenType: item.label.replace(/\s/g, '') })}>
                   <MaterialCommunityIcons name={item.icon} size={26} color="#e1413a" />
                   <View style={styles.menuText}>
                     <Text style={styles.menuLabel}>{item.label}</Text>
