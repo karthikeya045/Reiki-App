@@ -7,12 +7,12 @@ const images = [
   require('../../assets/symbols/hon-sha-ze-sho-nen.jpg'),
 ];
 
-const symbolNames = ["cho-ku-rei", "sei-he-ki", "hon-sha-ze-sho-nen"];
+const symbolNames = ["cho-ku-rei", "sei-hei-ki", "hon-sha-ze-sho-nen"];
 
 const symbolDescriptions = [
   "Cho Ku Rei (Power Symbol) – Amplifies energy, clears spaces, protects, and accelerates healing. Often drawn at the start and end to enhance the flow.",
-  "Sei He Ki (Harmony Symbol) – Balances mind and emotions, supports mental clarity, releases negative patterns, and aids emotional healing.",
-  "Hon Sha Ze Sho Nen (Distance Symbol) – Connects beyond time and space for distant healing, inner-child work, and transforming past patterns.",
+  "Sei Hei Ki (Harmony Symbol) – Balances mind and emotions, supports mental clarity, releases negative patterns, and aids emotional healing.",
+  "Hon Sha Ze Sho Nen (Distant Symbol) - Connects beyond time and space for distant healing, inner-child work, and transforming past patterns.",
 ];
 
 const symbolBulletPoints = [
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   descriptionScroll: {
     marginHorizontal: 16,
-    maxHeight: 625, // max height for description scroll area
+    maxHeight: 510, // max height for description scroll area
     marginBottom: 20,
   },
   symbolName: {

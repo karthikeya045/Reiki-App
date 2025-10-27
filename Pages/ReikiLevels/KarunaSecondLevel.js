@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
   },
   pageScroll: {
     marginHorizontal: 16,
-    maxHeight: 625, // max height for description scroll area
+    maxHeight: 560, // max height for description scroll area
     marginBottom: 20,
   },
   symbolName: {
