@@ -105,6 +105,7 @@ const TabNavigator = ({ userEmail, onLogout }) => (
       name="HomeTab"
       component={HomeStack}
       options={{
+        tabBarTestID: 'home-tab',
         tabBarIcon: ({ color, size }) => (
           <AntDesign name="home" size={size} color={color} />
         ),
@@ -114,6 +115,7 @@ const TabNavigator = ({ userEmail, onLogout }) => (
       name="Explore"
       component={Explore}
       options={{
+        tabBarTestID: 'explore-tab',
         tabBarIcon: ({ color, size }) => (
           <AntDesign name="search" size={size} color={color} />
         ),
@@ -133,6 +135,7 @@ const TabNavigator = ({ userEmail, onLogout }) => (
       // Use a render callback so we can inject props
       children={(props) => <Profile {...props} userEmail={userEmail} onLogout={onLogout} />}
       options={{
+        tabBarTestID: 'profile-tab',
         tabBarIcon: ({ color, size }) => (
           <AntDesign name="user" size={size} color={color} />
         ),
@@ -156,7 +159,7 @@ const Navigator = () => {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer testID="navigation-container">
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!isSignedIn ? (
           <Stack.Screen name="Login">
