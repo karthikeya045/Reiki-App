@@ -2,7 +2,7 @@
 npx create-expo-app --template > blank
 
 > To Reset the cache memory
-npm start -- --reset-cache
+npm start -- --reset-cache (or) npm run start -c
 
 >Packages Installed
 npm i @react-navigation/native 
