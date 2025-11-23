@@ -8,7 +8,7 @@ import { ThemeContext } from '../../services/ThemeContext';
 const menuItems = [
   { icon: 'language', label: 'Language' },
   { icon: 'theme-light-dark', label: 'Dark Theme', subtitle: 'Enable dark interface' },
-  // { icon: 'pencil', label: 'Privacy Policy' },
+  { icon: 'payment', label: 'Payment' },
   { icon: 'information-variant-circle-outline', label: 'About Us' },
   { icon: 'email-outline', label: 'Contact Us' },
 ];
@@ -99,6 +99,18 @@ const Profile = ({ onLogout }) => {
                   </View>
                 );
               }
+
+              if (item.label === 'Payment') {
+                return (
+                  <TouchableOpacity key={idx} style={styles.menuItem}>
+                    <MaterialIcons name={item.icon} size={26} color="#e1413a" />
+                    <View style={styles.menuText}>
+                      <Text style={styles.menuLabel}>Payment feature coming soon!</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              }
+
 
               return (
                 <TouchableOpacity key={idx} style={styles.menuItem}
